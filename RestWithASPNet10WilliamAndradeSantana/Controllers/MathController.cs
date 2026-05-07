@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestWithASPNet10WilliamAndradeSantana.Services;
+using System.Globalization;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Controllers;
 
@@ -15,26 +16,36 @@ public class MathController : ControllerBase
     }
 
     [HttpGet("{operation}/{firstNumber}/{secondNumber}")]
-    public IActionResult Get([FromRoute] string operation, [FromRoute] string firstNumber, [FromRoute] string secondNumber)
+    public IActionResult Get(
+        [FromRoute] string operation,
+        [FromRoute] string firstNumber,
+        [FromRoute] string secondNumber)
     {
-        if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+        if (!TryParseDecimal(firstNumber, out var first) ||
+            !TryParseDecimal(secondNumber, out var second))
         {
-            firstNumber = ConvertToDecimal(firstNumber);
-            secondNumber = ConvertToDecimal(secondNumber);
-            var result = _mathService.Calculator(operation, firstNumber, secondNumber);
+            return BadRequest("Os parâmetros devem ser números válidos.");
+        }
+
+        try
+        {
+            var result = _mathService.Calculate(operation, first, second);
             return Ok(result);
         }
-        return BadRequest("Invalid Operation");
+        catch (DivideByZeroException)
+        {
+            return BadRequest("Divisão por zero não é permitida.");
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
-    private bool IsNumeric(string secondNumber)
-    {
-        throw new NotImplementedException();
-    }
-
-    private decimal ConvertToDecimal(string secondNumber)
-    {
-        throw new NotImplementedException();
-    }
+    private static bool TryParseDecimal(string value, out decimal result) =>
+        decimal.TryParse(
+            value,
+            NumberStyles.Any,
+            NumberFormatInfo.InvariantInfo,
+            out result);
 }
-

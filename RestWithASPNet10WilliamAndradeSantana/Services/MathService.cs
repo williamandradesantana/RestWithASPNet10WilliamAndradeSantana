@@ -1,18 +1,20 @@
 ﻿namespace RestWithASPNet10WilliamAndradeSantana.Services;
+
 public class MathService
 {
-    public decimal Calculator(string operation, decimal firstNumber, decimal secondNumber)
+    public decimal Calculate(string operation, decimal first, decimal second)
     {
-        var result = operation switch
+        return operation.ToLowerInvariant() switch
         {
-            "+" or "sum" => firstNumber + secondNumber,
-            "-" or "subtract" => firstNumber - secondNumber,
-            "*" or "multiply" => firstNumber * secondNumber,
-            "division" => firstNumber / secondNumber,
-            "√" or "sqrt" => (decimal) Math.Sqrt((double)(firstNumber + secondNumber)),
-            _ => throw new InvalidOperationException("Invalid Operation")
+            "+" or "sum" => first + second,
+            "-" or "subtract" => first - second,
+            "*" or "multiply" => first * second,
+            "divide" or "division" => second == 0 ? throw new DivideByZeroException() : first / second,
+            "sqrt" or "√" => first < 0 ? 
+                throw new InvalidOperationException("Raiz quadrada de número negativo não é suportada.") : 
+                (decimal)Math.Sqrt((double)first),
+            
+            _ => throw new InvalidOperationException($"Operação '{operation}' não é suportada.")
         };
-        return result;
     }
 }
-
