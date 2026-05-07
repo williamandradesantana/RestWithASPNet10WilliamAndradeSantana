@@ -14,7 +14,7 @@ public class GreetingController : ControllerBase
     public Greeting Get([FromQuery] string name = "World")
     {
         var id = Interlocked.Increment(ref _counter);
-        var content = String.Format(_template, name);
+        var content = string.Format(_template, name);
         return new Greeting(id, content);
     }
 }
