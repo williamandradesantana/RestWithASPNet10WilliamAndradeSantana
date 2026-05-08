@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestWithASPNet10WilliamAndradeSantana.Services;
-using System.Globalization;
+using RestWithASPNet10WilliamAndradeSantana.Utils;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Controllers;
 
@@ -9,10 +9,12 @@ namespace RestWithASPNet10WilliamAndradeSantana.Controllers;
 public class MathController : ControllerBase
 {
     private readonly MathService _mathService;
+    private readonly MathUtils _mathUtils;
 
-    public MathController(MathService mathService)
+    public MathController(MathService mathService, MathUtils mathUtils)
     {
         _mathService = mathService;
+        _mathUtils = mathUtils;
     }
 
     [HttpGet("{operation}/{firstNumber}/{secondNumber}")]
@@ -21,11 +23,11 @@ public class MathController : ControllerBase
         [FromRoute] string firstNumber,
         [FromRoute] string secondNumber)
     {
-        if (!TryParseDecimal(firstNumber, out var first) ||
-            !TryParseDecimal(secondNumber, out var second))
+        if (!_mathUtils.TryParseDecimal(firstNumber, out var first) ||
+            !_mathUtils.TryParseDecimal(secondNumber, out var second))
         {
             return BadRequest("Os parâmetros devem ser números válidos.");
-        }
+        }   
 
         try
         {
@@ -41,11 +43,4 @@ public class MathController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
-    private static bool TryParseDecimal(string value, out decimal result) =>
-        decimal.TryParse(
-            value,
-            NumberStyles.Any,
-            NumberFormatInfo.InvariantInfo,
-            out result);
 }

@@ -1,11 +1,13 @@
 using RestWithASPNet10WilliamAndradeSantana.Services;
+using RestWithASPNet10WilliamAndradeSantana.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<MathService>();
+builder.Services.AddSingleton<MathService>();
+builder.Services.AddSingleton<MathUtils>();
 
 var app = builder.Build();
 
