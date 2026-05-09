@@ -1,3 +1,4 @@
+using RestWithASPNet10WilliamAndradeSantana.Configurations;
 using RestWithASPNet10WilliamAndradeSantana.Services;
 using RestWithASPNet10WilliamAndradeSantana.Services.Implementation;
 
@@ -5,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddDatabaseConfiguration(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddScoped<IPersonServices, PersonServicesImplementation>();
 
