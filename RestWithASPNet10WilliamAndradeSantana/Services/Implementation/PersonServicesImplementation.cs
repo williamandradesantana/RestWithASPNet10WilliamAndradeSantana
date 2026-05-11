@@ -1,19 +1,29 @@
 ﻿using RestWithASPNet10WilliamAndradeSantana.Model;
+using RestWithASPNet10WilliamAndradeSantana.Model.Context;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Services.Implementation;
 
 public class PersonServicesImplementation : IPersonServices
 {
+    private MSSQLContext _context;
+
+    public PersonServicesImplementation(MSSQLContext context)
+    {
+        _context = context;
+    }
+
     public List<Person> FindAll()
     {
-        List<Person> persons = new List<Person>();
-        for (int i = 0; i < 8; i++) persons.Add(MockPerson(i));
-        return persons;
+        return _context.Persons.OrderByDescending((person) => person.FirstName).ToList(); ;
     }
 
     public Person FindById(long id)
     {
-        var person = MockPerson((int) id);
+        var person = _context.Persons.FirstOrDefault((p) => p.Id == id);
+        if (person == null)
+        {
+            throw new KeyNotFoundException("Person not found!");
+        }
         return person;
     }
 
