@@ -14,7 +14,7 @@ public class PersonServicesImplementation : IPersonServices
 
     public List<Person> FindAll()
     {
-        return _context.Persons.OrderByDescending((person) => person.FirstName).ToList();
+        return _context.Persons.OrderBy((person) => person.FirstName).ToList();
     }
 
     public Person FindById(long id)
