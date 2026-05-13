@@ -14,34 +14,35 @@ public class PersonServicesImplementation : IPersonServices
 
     public List<Person> FindAll()
     {
-        return _context.Persons.OrderBy((person) => person.FirstName).ToList();
+        return _context.Persons.ToList();
     }
 
     public Person FindById(long id)
     {
-        var person = _context.Persons.FirstOrDefault((p) => p.Id == id);
-        return (person == null) ? throw new KeyNotFoundException($"Person with id {id} not found") : person;
+        return _context.Persons.Find(id);
     }
 
-    public Person CreatePerson(Person person)
+    public Person Create(Person person)
     {
-        _context.Persons.Add(person);
+        _context.Add(person);
         _context.SaveChanges();
         return person;
     }
 
-    public Person UpdatePerson(Person person)
+    public Person Update(Person person)
     {
-        var personFound = FindById(person.Id);   
-        _context.Entry(personFound).CurrentValues.SetValues(person);
-        _context.SaveChanges();
-        return personFound;
-    }
+        var existingPerson = _context.Persons.Find(person.Id);
+        if (existingPerson == null) return null;
 
-    public void DeletePerson(long id)
+        _context.Entry(existingPerson).CurrentValues.SetValues(person);
+        _context.SaveChanges();
+        return person;
+    }
+    public void Delete(long id)
     {
-        var person = FindById(id);
-        _context.Persons.Remove(person);
+        var existingPerson = _context.Persons.Find(id);
+        if (existingPerson == null) return;
+        _context.Remove(existingPerson);
         _context.SaveChanges();
     }
 }

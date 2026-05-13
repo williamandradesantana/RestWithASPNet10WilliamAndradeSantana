@@ -4,9 +4,9 @@ namespace RestWithASPNet10WilliamAndradeSantana.Services;
 
 public interface IPersonServices
 {
-    Person CreatePerson(Person person);
+    Person Create(Person person);
     Person FindById(long id);
     List<Person> FindAll();
-    Person UpdatePerson(Person person);
-    void DeletePerson(long id);
+    Person Update(Person person);
+    void Delete(long id);
 }

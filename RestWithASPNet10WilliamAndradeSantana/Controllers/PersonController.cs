@@ -18,64 +18,60 @@ public class PersonController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult FindAll()
+    public IActionResult Get()
     {
-        _logger.LogInformation("Fetching all people");
-        var persons = _personServices.FindAll();
-        return Ok(persons);
+        _logger.LogInformation("Fetching all persons");
+        return Ok(_personServices.FindAll());
     }
 
     [HttpGet("{id}")]
-    public IActionResult FindById([FromRoute] long id)
+    public IActionResult Get(long id)
     {
-        _logger.LogInformation("Fetching person with {id}", id);
-        var createdPerson = _personServices.FindById(id);
-        if (createdPerson == null) 
-        { 
-            _logger.LogWarning("Person with {id} not found", id);
-            return NotFound(); 
+        _logger.LogInformation("Fetching person with ID {id}", id);
+        var person = _personServices.FindById(id);
+        if (person == null)
+        {
+            _logger.LogWarning("Person with ID {id} not found", id);
+            return NotFound();
+        }
+        return Ok(person);
+    }
+
+    [HttpPost]
+    public IActionResult Post([FromBody] Person person)
+    {
+        _logger.LogInformation("Creating new Person: {firstName}", person.FirstName);
+
+        var createdPerson = _personServices.Create(person);
+        if (createdPerson == null)
+        {
+            _logger.LogError("Failed to create person with name {firstName}", person.FirstName);
+            return NotFound();
         }
         return Ok(createdPerson);
     }
 
-    [HttpPost]
-    public IActionResult CreatePerson([FromBody] Person person)
+    [HttpPut]
+    public IActionResult Put([FromBody] Person person)
     {
-        _logger.LogInformation("Creating new person: {firstName}", person.FirstName);
-        if (person == null) 
-        { 
-            _logger.LogWarning("Received null person object for creation");
-            return BadRequest(); 
-        }
-        var createdPerson = _personServices.CreatePerson(person);
-        return CreatedAtAction(nameof(FindById), new { Id = person.Id }, createdPerson);
-    }
+        _logger.LogInformation("Updating person with ID {id}", person.Id);
 
-    [HttpPut("{id}")]
-    public IActionResult UpdatedPerson([FromBody] Person person)
-    {
-        _logger.LogInformation("Updating person with {id}", person.Id);
-        if (person == null) 
+        var createdPerson = _personServices.Update(person);
+        if (createdPerson == null)
         {
-            _logger.LogWarning("Received null person object for update");
-            return BadRequest(); 
+            _logger.LogError("Failed to update person with ID {id}", person.Id);
+            return NotFound();
         }
-        var updatedPerson = _personServices.UpdatePerson(person);
-        if (updatedPerson == null) 
-        {
-            _logger.LogWarning("Person with {id} not found for update", person.Id);
-            return NotFound(); 
-        }
-        _logger.LogDebug("Person with {id} updated successfully", person.Id);
-        return Ok(updatedPerson);
+        _logger.LogDebug("Person updated successfully: {firstName}", createdPerson.FirstName);
+        return Ok(createdPerson);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult DeletePerson([FromRoute] int id)
+    public IActionResult Delete(int id)
     {
-        _logger.LogInformation("Deleting person with {id}", id);
-        _personServices.DeletePerson(id);
-        _logger.LogDebug("Person with {id} deleted successfully", id);
+        _logger.LogInformation("Deleting person with ID {id}", id);
+        _personServices.Delete(id);
+        _logger.LogDebug("Person with ID {id} deleted successfully", id);
         return NoContent();
     }
 }
