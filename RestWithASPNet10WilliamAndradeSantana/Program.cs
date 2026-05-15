@@ -1,4 +1,6 @@
 using RestWithASPNet10WilliamAndradeSantana.Configurations;
+using RestWithASPNet10WilliamAndradeSantana.Repositories;
+using RestWithASPNet10WilliamAndradeSantana.Repositories.Implementation;
 using RestWithASPNet10WilliamAndradeSantana.Services;
 using RestWithASPNet10WilliamAndradeSantana.Services.Implementation;
 
@@ -10,6 +12,7 @@ builder.AddSerilogLogging();
 builder.Services.AddDatabaseConfiguration(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddScoped<IPersonServices, PersonServicesImplementation>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 var app = builder.Build();
 
