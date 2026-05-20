@@ -5,15 +5,15 @@ namespace RestWithASPNet10WilliamAndradeSantana.Services.Implementation;
 
 public class BookServicesImplementation : IBookServices
 {
-    private readonly IBookRepository _repository;
+    private readonly IRepository<Book> _repository;
 
-    public BookServicesImplementation(IBookRepository repository)
+    public BookServicesImplementation(IRepository<Book> repository)
     {
         _repository = repository;
     }
     public List<Book> GetBooks()
     {
-        return _repository.FindAll();
+        return _repository.GetAll();
     }
 
     public Book GetBookById(long id)
@@ -23,16 +23,16 @@ public class BookServicesImplementation : IBookServices
 
     public Book CreateBook(Book book)
     {
-        return _repository.CreateBook(book);
+        return _repository.Create(book);
     }
 
 
     public Book UpdateBook(Book book)
     {
-        return _repository.UpdateBook(book);
+        return _repository.Update(book);
     }
     public void DeleteBook(long id)
     {
-        _repository.DeleteBook(id);
+        _repository.Delete(id);
     }
 }
