@@ -9,4 +9,5 @@ public interface IBookServices
     Book CreateBook(Book book);
     Book UpdateBook(Book book);
     void DeleteBook(long id);
+    bool ExistsBook(long id);
 }

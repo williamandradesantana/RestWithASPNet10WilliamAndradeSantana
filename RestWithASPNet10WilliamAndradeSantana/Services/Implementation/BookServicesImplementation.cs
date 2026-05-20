@@ -35,4 +35,9 @@ public class BookServicesImplementation : IBookServices
     {
         _repository.Delete(id);
     }
+
+    public bool ExistsBook(long id)
+    {
+        return _repository.Exists(id);
+    }
 }

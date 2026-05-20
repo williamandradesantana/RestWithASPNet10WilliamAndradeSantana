@@ -9,4 +9,5 @@ public interface IPersonServices
     List<Person> FindAll();
     Person Update(Person person);
     void Delete(long id);
+    bool ExistsPerson(long id);
 }

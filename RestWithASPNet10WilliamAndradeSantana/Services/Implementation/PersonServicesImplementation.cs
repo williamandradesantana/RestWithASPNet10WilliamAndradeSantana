@@ -5,16 +5,16 @@ namespace RestWithASPNet10WilliamAndradeSantana.Services.Implementation;
 
 public class PersonServicesImplementation : IPersonServices
 {
-    private IPersonRepository _repository;
+    private IRepository<Person> _repository;
 
-    public PersonServicesImplementation(IPersonRepository repository)
+    public PersonServicesImplementation(IRepository<Person> repository)
     {
         _repository = repository;
     }
 
     public List<Person> FindAll()
     {
-        return _repository.FindAll();
+        return _repository.GetAll();
     }
 
     public Person FindById(long id)
@@ -35,5 +35,10 @@ public class PersonServicesImplementation : IPersonServices
     public void Delete(long id)
     {
         _repository.Delete(id);
+    }
+
+    public bool ExistsPerson(long id)
+    {
+        return _repository.Exists(id);
     }
 }
