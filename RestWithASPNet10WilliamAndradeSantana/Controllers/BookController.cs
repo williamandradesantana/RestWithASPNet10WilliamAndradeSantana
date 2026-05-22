@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestWithASPNet10WilliamAndradeSantana.Model;
+using RestWithASPNet10WilliamAndradeSantana.Data.DTO;
 using RestWithASPNet10WilliamAndradeSantana.Services;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Controllers;
@@ -37,7 +37,7 @@ public class BookController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateBook([FromBody] Book book)
+    public IActionResult CreateBook([FromBody] BookDTO book)
     {
         _logger.LogInformation("Creating a new book with title {title}", book.Title);
         var createdBook = _services.CreateBook(book);
@@ -50,7 +50,7 @@ public class BookController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult UpdateBook([FromBody] Book book)
+    public IActionResult UpdateBook([FromBody] BookDTO book)
     {
         _logger.LogInformation("Updating book with ID {id}", book.Id);
         var updatedBook = _services.UpdateBook(book);

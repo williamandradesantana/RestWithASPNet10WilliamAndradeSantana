@@ -1,4 +1,6 @@
-﻿using RestWithASPNet10WilliamAndradeSantana.Model;
+﻿using Mapster;
+using RestWithASPNet10WilliamAndradeSantana.Data.DTO;
+using RestWithASPNet10WilliamAndradeSantana.Model;
 using RestWithASPNet10WilliamAndradeSantana.Repositories;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Services.Implementation;
@@ -11,25 +13,29 @@ public class BookServicesImplementation : IBookServices
     {
         _repository = repository;
     }
-    public List<Book> GetBooks()
+    public List<BookDTO> GetBooks()
     {
-        return _repository.GetAll();
+        return _repository.GetAll().Adapt<List<BookDTO>>();
     }
 
-    public Book GetBookById(long id)
+    public BookDTO GetBookById(long id)
     {
-        return _repository.FindById(id);
+        return _repository.FindById(id).Adapt<BookDTO>();
     }
 
-    public Book CreateBook(Book book)
+    public BookDTO CreateBook(BookDTO book)
     {
-        return _repository.Create(book);
+        var entity = book.Adapt<Book>();
+        entity = _repository.Create(entity);
+        return entity.Adapt<BookDTO>();
     }
 
 
-    public Book UpdateBook(Book book)
+    public BookDTO UpdateBook(BookDTO book)
     {
-        return _repository.Update(book);
+        var entity = book.Adapt<Book>();
+        entity = _repository.Update(entity);
+        return entity.Adapt<BookDTO>();
     }
     public void DeleteBook(long id)
     {
