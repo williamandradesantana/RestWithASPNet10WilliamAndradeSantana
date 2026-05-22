@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestWithASPNet10WilliamAndradeSantana.Model;
+using RestWithASPNet10WilliamAndradeSantana.Data.DTO;
 using RestWithASPNet10WilliamAndradeSantana.Services;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Controllers;
@@ -38,7 +38,7 @@ public class PersonController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] Person person)
+    public IActionResult Post([FromBody] PersonDTO person)
     {
         _logger.LogInformation("Creating new Person: {firstName}", person.FirstName);
 
@@ -52,7 +52,7 @@ public class PersonController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult Put([FromBody] Person person)
+    public IActionResult Put([FromBody] PersonDTO person)
     {
         _logger.LogInformation("Updating person with ID {id}", person.Id);
 
