@@ -2,7 +2,7 @@
 using RestWithASPNet10WilliamAndradeSantana.Data.DTO.V1;
 using RestWithASPNet10WilliamAndradeSantana.Services;
 
-namespace RestWithASPNet10WilliamAndradeSantana.Controllers;
+namespace RestWithASPNet10WilliamAndradeSantana.Controllers.V1;
 
 [ApiController]
 [Route("api/people/v1")]

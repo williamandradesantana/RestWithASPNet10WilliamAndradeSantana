@@ -2,7 +2,7 @@
 using RestWithASPNet10WilliamAndradeSantana.Data.DTO.V1;
 using RestWithASPNet10WilliamAndradeSantana.Services;
 
-namespace RestWithASPNet10WilliamAndradeSantana.Controllers;
+namespace RestWithASPNet10WilliamAndradeSantana.Controllers.V1;
 
 [ApiController]
 [Route("api/books/v1")]
@@ -46,6 +46,8 @@ public class BookController : ControllerBase
             _logger.LogError("Failed to create book with title {title}", book.Title);
             return BadRequest();
         }
+        Response.Headers.Append("X-API-Deprecated", "true");
+        Response.Headers.Append("X-API-Deprecation-Date", "2026-12-31");
         return CreatedAtAction(nameof(GetBookById), new { id = createdBook.Id }, createdBook);
     }
 
