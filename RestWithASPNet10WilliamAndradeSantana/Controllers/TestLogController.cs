@@ -3,7 +3,7 @@
 namespace RestWithASPNet10WilliamAndradeSantana.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/v1")]
 public class TestLogController : ControllerBase
 {
     private readonly ILogger<TestLogController> _logger;

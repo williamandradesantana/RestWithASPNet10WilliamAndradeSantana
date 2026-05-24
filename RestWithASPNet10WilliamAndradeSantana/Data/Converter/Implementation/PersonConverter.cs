@@ -1,5 +1,5 @@
 ﻿using RestWithASPNet10WilliamAndradeSantana.Data.Converter.Contract;
-using RestWithASPNet10WilliamAndradeSantana.Data.DTO;
+using RestWithASPNet10WilliamAndradeSantana.Data.DTO.V1;
 using RestWithASPNet10WilliamAndradeSantana.Model;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Data.Converter.Implementation;

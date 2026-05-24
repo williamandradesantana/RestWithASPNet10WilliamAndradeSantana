@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestWithASPNet10WilliamAndradeSantana.Data.DTO;
+using RestWithASPNet10WilliamAndradeSantana.Data.DTO.V1;
 using RestWithASPNet10WilliamAndradeSantana.Services;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Controllers;
 
 [ApiController]
-[Route("api/people")]
+[Route("api/people/v1")]
 public class PersonController : ControllerBase
 {
     private IPersonServices _personServices;

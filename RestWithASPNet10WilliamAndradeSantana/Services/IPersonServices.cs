@@ -1,4 +1,4 @@
-﻿using RestWithASPNet10WilliamAndradeSantana.Data.DTO;
+﻿using RestWithASPNet10WilliamAndradeSantana.Data.DTO.V1;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Services;
 
