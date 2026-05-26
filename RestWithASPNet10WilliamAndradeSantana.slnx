@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="RestWithASPNet10WilliamAndradeSantana.Tests/RestWithASPNet10WilliamAndradeSantana.Tests.csproj" Id="2eec552f-2227-40c4-af0e-f4d3c9704135" />
   <Project Path="RestWithASPNet10WilliamAndradeSantana/RestWithASPNet10WilliamAndradeSantana.csproj" />
 </Solution>
