@@ -62,4 +62,55 @@ public class PersonConverterTests
         // Assert
         person.Should().BeNull();
     }
+
+    // Person to PersonDTO conversion tests
+    [Fact]
+    public void Parse_ShouldConvertPersonToPersonDTO()
+    {
+        // Arrange: prepare the data, objects, and dependencies required for the test
+        var entity = new Person
+        {
+            Id = 1,
+            FirstName = "Mahatma",
+            LastName = "Gandhi",
+            Address = "Porbandar - India",
+            Gender = "Male"
+        };
+
+        var expectedPersonDTO = new PersonDTO
+        {
+            Id = 1,
+            FirstName = "Mahatma",
+            LastName = "Gandhi",
+            Address = "Porbandar - India",
+            Gender = "Male",
+            BirthDay = DateTime.Now
+        };
+
+        // Act: execute the method or functionallity under test
+        var dto = _converter.Parse(entity);
+
+        // Assert: verify that the person matches the expected outcome 
+        dto.Should().NotBeNull();
+        dto.Id.Should().Be(expectedPersonDTO.Id);
+        dto.FirstName.Should().Be(expectedPersonDTO.FirstName);
+        dto.LastName.Should().Be(expectedPersonDTO.LastName);
+        dto.Address.Should().Be(expectedPersonDTO.Address);
+        dto.Gender.Should().Be(expectedPersonDTO.Gender);
+        dto.Should().BeEquivalentTo(expectedPersonDTO, options => options.Excluding(person => person.BirthDay));
+        dto.BirthDay.Should().NotBeNull();
+    }
+
+    [Fact]
+    public void Parse_NullPersonShouldReturnNull()
+    {
+        // Arrange
+        Person entity = null;
+
+        // Act
+        var dto = _converter.Parse(entity);
+
+        // Assert
+        dto.Should().BeNull();
+    }
 }
