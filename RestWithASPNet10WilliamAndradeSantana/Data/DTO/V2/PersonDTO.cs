@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using RestWithASPNet10WilliamAndradeSantana.JsonSerializers;
+using System.Text.Json.Serialization;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Data.DTO.V2;
 
@@ -16,5 +17,7 @@ public class PersonDTO
     //[JsonPropertyOrder(1)]
     public string Address { get; set; }
     public string Gender { get; set; }
+
+    [JsonConverter(typeof(DateSerializer))]
     public DateTime? BirthDay { get; set; }
 }

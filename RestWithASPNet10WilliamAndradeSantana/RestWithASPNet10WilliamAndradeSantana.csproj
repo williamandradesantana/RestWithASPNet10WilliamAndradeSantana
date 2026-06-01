@@ -13,10 +13,6 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Utils\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Evolve" Version="3.3.0-alpha1" />
     <PackageReference Include="Mapster" Version="7.4.2-pre02" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.7" />
