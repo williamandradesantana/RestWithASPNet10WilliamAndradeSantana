@@ -15,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Evolve" Version="3.3.0-alpha1" />
     <PackageReference Include="Mapster" Version="7.4.2-pre02" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Xml.Extensions" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.7" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="10.0.0" />
