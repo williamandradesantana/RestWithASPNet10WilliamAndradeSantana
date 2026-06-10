@@ -18,6 +18,9 @@ public class PersonController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(200, Type = typeof(List<PersonDTO>))]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(401)]
     public IActionResult Get()
     {
         _logger.LogInformation("Fetching all persons");
@@ -25,6 +28,9 @@ public class PersonController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(200, Type = typeof(PersonDTO))]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(401)]
     public IActionResult Get(long id)
     {
         _logger.LogInformation("Fetching person with ID {id}", id);
@@ -38,6 +44,9 @@ public class PersonController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(200, Type = typeof(PersonDTO))]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(401)]
     public IActionResult Post([FromBody] PersonDTO person)
     {
         _logger.LogInformation("Creating new Person: {firstName}", person.FirstName);
@@ -52,6 +61,9 @@ public class PersonController : ControllerBase
     }
 
     [HttpPut]
+    [ProducesResponseType(200, Type = typeof(PersonDTO))]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(401)]
     public IActionResult Put([FromBody] PersonDTO person)
     {
         _logger.LogInformation("Updating person with ID {id}", person.Id);
@@ -67,6 +79,9 @@ public class PersonController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(401)]
     public IActionResult Delete(int id)
     {
         _logger.LogInformation("Deleting person with ID {id}", id);
