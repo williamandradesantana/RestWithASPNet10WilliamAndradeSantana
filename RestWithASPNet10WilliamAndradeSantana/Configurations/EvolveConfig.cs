@@ -19,13 +19,7 @@ public static class EvolveConfig
                 throw new ArgumentNullException("Connection string 'MSSQLServerSQLConnectionString' is not configured.");
             try
             {
-                using var evolveConnection = new SqlConnection(connectionString);
-                var evolve = new Evolve(evolveConnection, msg => Log.Information(msg)) 
-                { 
-                    Locations = new List<string> { "db/migrations", "db/dataset" },
-                    IsEraseDisabled = true
-                };
-                evolve.Migrate();
+                ExecuteMigrations(connectionString);
             }
             catch (Exception ex)
             {
@@ -34,5 +28,16 @@ public static class EvolveConfig
             }
         }
         return services;
+    }
+
+    public static void ExecuteMigrations(string connectionString)
+    {
+        using var evolveConnection = new SqlConnection(connectionString);
+        var evolve = new Evolve(evolveConnection, msg => Log.Information(msg))
+        {
+            Locations = new List<string> { "db/migrations", "db/dataset" },
+            IsEraseDisabled = true
+        };
+        evolve.Migrate();
     }
 }

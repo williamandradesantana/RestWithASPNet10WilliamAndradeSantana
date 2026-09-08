@@ -3,7 +3,7 @@ using RestWithASPNet10WilliamAndradeSantana.Data.Converter.Implementation;
 using RestWithASPNet10WilliamAndradeSantana.Data.DTO.V2;
 using RestWithASPNet10WilliamAndradeSantana.Model;
 
-namespace RestWithASPNet10WilliamAndradeSantana.Tests;
+namespace RestWithASPNet10WilliamAndradeSantana.Tests.UnitTests;
 
 public class PersonConverterTests
 {
