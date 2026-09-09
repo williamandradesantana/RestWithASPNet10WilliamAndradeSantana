@@ -35,4 +35,19 @@ public  class SwaggerIntegrationTests : IClassFixture<SqlServerFixture>
             content
         );
     }
+
+    [Fact]
+    public async Task SwaggerUI_ShouldReturnSwaggerUI()
+    {
+        // arrange & act
+        var response = await _httpClient.GetAsync("/swagger-ui/index.html");
+
+        // assert
+        response.EnsureSuccessStatusCode();
+        
+        var content = await response.Content.ReadAsStringAsync();
+        content.Should().NotBeNull();
+        content.Should().Contain("<div id=\"swagger-ui\">", content);
+        content.Should().Contain("ASP.NET 2026 REST API's from 0 to Azure and GCP with .NET 10, Docker and Kubernetes", content);
+    }
 }
