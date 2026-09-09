@@ -24,6 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <Content Include="..\RestWithASPNet10WilliamAndradeSantana\db\migrations\**\*.sql" Link="db\migrations\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="Always"/>
+	  <Content Include="..\RestWithASPNet10WilliamAndradeSantana\db\dataset\**\*.sql" Link="db\dataset\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="Always"/>
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
