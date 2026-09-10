@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using RestWithASPNet10WilliamAndradeSantana.Data.DTO.V1;
 using RestWithASPNet10WilliamAndradeSantana.Services;
 
@@ -6,6 +7,7 @@ namespace RestWithASPNet10WilliamAndradeSantana.Controllers.V1;
 
 [ApiController]
 [Route("api/people/v1")]
+//[EnableCors("LocalPolicy")]
 public class PersonController : ControllerBase
 {
     private IPersonServices _personServices;
@@ -31,6 +33,7 @@ public class PersonController : ControllerBase
     [ProducesResponseType(200, Type = typeof(PersonDTO))]
     [ProducesResponseType(400)]
     [ProducesResponseType(401)]
+    [EnableCors("LocalPolicy")]
     public IActionResult Get(long id)
     {
         _logger.LogInformation("Fetching person with ID {id}", id);
@@ -47,6 +50,7 @@ public class PersonController : ControllerBase
     [ProducesResponseType(200, Type = typeof(PersonDTO))]
     [ProducesResponseType(400)]
     [ProducesResponseType(401)]
+    [EnableCors("MultipleOriginPolicy")]
     public IActionResult Post([FromBody] PersonDTO person)
     {
         _logger.LogInformation("Creating new Person: {firstName}", person.FirstName);
