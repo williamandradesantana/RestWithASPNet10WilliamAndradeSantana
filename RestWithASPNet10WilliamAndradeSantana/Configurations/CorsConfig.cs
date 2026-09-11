@@ -5,6 +5,9 @@ public static class CorsConfig
     public static IServiceCollection AddCorsConfiguration(
         this IServiceCollection services, IConfiguration configuration)
     {
+        string[] origins = configuration.GetSection("Cors:Origins")
+            .Get<string[]>() ?? Array.Empty<string>();
+        
         services.AddCors(options =>
         {
             options.AddPolicy("LocalPolicy", policy =>
@@ -17,11 +20,15 @@ public static class CorsConfig
 
             options.AddPolicy("MultipleOriginPolicy", policy =>
             {
-                policy.WithOrigins(
-                    "http://localhost:3000", 
-                    "http://localhost:8080",
-                    "https://williamsantana-portfolio.vercel.app/"
-                    )
+                policy.WithOrigins(origins)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            });
+
+            options.AddPolicy("DefaultPolicy", policy =>
+            {
+                policy.WithOrigins(origins)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials();
@@ -32,7 +39,8 @@ public static class CorsConfig
 
     public static IApplicationBuilder UseCorsConfiguration(this IApplicationBuilder app)
     {
-        app.UseCors();
+        //app.UseCors();
+        app.UseCors("DefaultPolicy");
         return app;
     }
 }
