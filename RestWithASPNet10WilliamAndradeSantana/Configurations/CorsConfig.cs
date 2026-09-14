@@ -58,6 +58,7 @@ public static class CorsConfig
             {
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
                 await context.Response.WriteAsync("CORS origin not allowed.");
+                return;
             }
             await next();
         });

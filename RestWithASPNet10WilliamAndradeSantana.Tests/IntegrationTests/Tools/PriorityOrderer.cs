@@ -3,7 +3,7 @@ using Xunit.Sdk;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Tests.IntegrationTests.Tools;
 
-public class PriorityOrder : ITestCaseOrderer
+public class PriorityOrderer : ITestCaseOrderer
 {
     public IEnumerable<TTestCase> OrderTestCases<TTestCase>
         (IEnumerable<TTestCase> testCases) 
