@@ -16,6 +16,7 @@ namespace RestWithASPNet10WilliamAndradeSantana.Tests.IntegrationTests.CORS;
 public class PersonCorsIntegrationTests : IClassFixture<SqlServerFixture>
 {
     private readonly HttpClient _httpClient;
+    private static PersonDTO _person;
 
     public PersonCorsIntegrationTests(SqlServerFixture sqlFixture)
     {
@@ -57,6 +58,8 @@ public class PersonCorsIntegrationTests : IClassFixture<SqlServerFixture>
         var created = await response.Content.ReadFromJsonAsync<PersonDTO>();
         created.Should().NotBeNull();
         created.Id.Should().BeGreaterThan(0);
+
+        _person = created;
     }
 
     [Fact(DisplayName = "02 - Create Person With Disallowed Origin")]
@@ -78,6 +81,38 @@ public class PersonCorsIntegrationTests : IClassFixture<SqlServerFixture>
         var response = await _httpClient.PostAsJsonAsync("/api/people/v1", request);
 
         // assert
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+
+        var content = await response.Content.ReadAsStringAsync();
+        content.Should().Be("CORS origin not allowed.");
+    }
+
+    [Fact(DisplayName = "03 - Get one person with allowed origin")]
+    [TestPriority(3)]
+    public async Task FindPersonById_WithAllowedOrigin_ShouldReturnOk()
+    {
+        AddOriginHeader("http://localhost:3000");
+
+        var response = await _httpClient.GetAsync($"/api/people/v1/{_person.Id}");
+
+        response.EnsureSuccessStatusCode();
+
+        var found = await response.Content.ReadFromJsonAsync<PersonDTO>();
+        found.Should().NotBeNull();
+        found.Should().BeEquivalentTo(_person);
+        found.FirstName.Should().Be(_person.FirstName);
+        found.LastName.Should().Be(_person.LastName);
+        found.Address.Should().Be(_person.Address);
+    }
+
+    [Fact(DisplayName = "04 - Get one person with disallowed origin")]
+    [TestPriority(4)]
+    public async Task FindPersonById_WithDisallowedOrigin_ShouldReturnForbidden()
+    {
+        AddOriginHeader("http://localhost:3001");
+
+        var response = await _httpClient.GetAsync($"/api/people/v1/{_person.Id}");
+
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
 
         var content = await response.Content.ReadAsStringAsync();
