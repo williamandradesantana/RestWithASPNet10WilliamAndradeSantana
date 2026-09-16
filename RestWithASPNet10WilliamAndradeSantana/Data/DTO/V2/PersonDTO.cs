@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Data.DTO.V2;
 
@@ -10,4 +11,5 @@ public class PersonDTO
     public string Address { get; set; }
     public string Gender { get; set; }
     public DateTime? BirthDay { get; set; }
+    public bool Enabled { get; set; }
 }

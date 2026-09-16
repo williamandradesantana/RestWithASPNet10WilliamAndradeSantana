@@ -6,7 +6,7 @@ namespace RestWithASPNet10WilliamAndradeSantana.Repositories.Implementation;
 
 public class GenericRepository<T> : IRepository<T> where T : BaseEntity
 {
-    private readonly MSSQLContext _context;
+    protected MSSQLContext _context;
     private DbSet<T> _dataset;
 
     public GenericRepository(MSSQLContext context)
