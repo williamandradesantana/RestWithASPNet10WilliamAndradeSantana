@@ -9,5 +9,6 @@ public interface IPersonServices
     List<PersonDTO> FindAll();
     PersonDTO Update(PersonDTO person);
     void Delete(long id);
+    PersonDTO Disable(long id);
     bool ExistsPerson(long id);
 }

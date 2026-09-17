@@ -1,16 +1,16 @@
-﻿using RestWithASPNet10WilliamAndradeSantana.Data.Converter.Implementation;
+﻿using Mapster;
+using RestWithASPNet10WilliamAndradeSantana.Data.Converter.Implementation;
 using RestWithASPNet10WilliamAndradeSantana.Data.DTO.V1;
-using RestWithASPNet10WilliamAndradeSantana.Model;
 using RestWithASPNet10WilliamAndradeSantana.Repositories;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Services.Implementation;
 
 public class PersonServicesImplementation : IPersonServices
 {
-    private IRepository<Person> _repository;
+    private IPersonRepository _repository;
     private readonly PersonConverter _converter;
 
-    public PersonServicesImplementation(IRepository<Person> repository)
+    public PersonServicesImplementation(IPersonRepository repository)
     {
         _repository = repository;
         _converter = new PersonConverter();
@@ -48,5 +48,11 @@ public class PersonServicesImplementation : IPersonServices
     public bool ExistsPerson(long id)
     {
         return _repository.Exists(id);
+    }
+
+    public PersonDTO Disable(long id)
+    {
+        var entity = _repository.Disable(id);
+        return entity.Adapt<PersonDTO>();
     }
 }

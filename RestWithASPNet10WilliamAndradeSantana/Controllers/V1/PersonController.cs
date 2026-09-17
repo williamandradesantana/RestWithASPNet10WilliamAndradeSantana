@@ -93,4 +93,21 @@ public class PersonController : ControllerBase
         _logger.LogDebug("Person with ID {id} deleted successfully", id);
         return NoContent();
     }
+
+    [HttpPatch("{id}")]
+    [ProducesResponseType(200, Type = typeof(PersonDTO))]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(401)]
+    public IActionResult Disable(long id)
+    {
+        _logger.LogInformation("Disabling person with id: {id}", id);
+        var disabledPerson = _personServices.Disable(id);
+        if (disabledPerson == null)
+        {
+            _logger.LogError("Failed to disable person with id {id}", id);
+            return NotFound();
+        }
+        _logger.LogDebug("Person with id {id} disabled successfully ", id);
+        return Ok(disabledPerson);
+    }
 }
