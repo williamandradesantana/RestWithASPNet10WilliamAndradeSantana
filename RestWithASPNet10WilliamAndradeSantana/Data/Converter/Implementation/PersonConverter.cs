@@ -15,7 +15,8 @@ public class PersonConverter : IParser<Person, PersonDTO>, IParser<PersonDTO, Pe
             FirstName = origin.FirstName,
             LastName = origin.LastName,
             Address = origin.Address,
-            Gender = origin.Gender
+            Gender = origin.Gender,
+            Enabled = origin.Enabled
         };
     }
     public List<Person> ParseList(List<PersonDTO> origin)
@@ -33,7 +34,8 @@ public class PersonConverter : IParser<Person, PersonDTO>, IParser<PersonDTO, Pe
             FirstName = origin.FirstName,
             LastName = origin.LastName,
             Address = origin.Address,
-            Gender = origin.Gender
+            Gender = origin.Gender,
+            Enabled = origin.Enabled
         };
     }
 

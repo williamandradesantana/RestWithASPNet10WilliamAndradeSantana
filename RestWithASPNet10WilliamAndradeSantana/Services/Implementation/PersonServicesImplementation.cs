@@ -29,6 +29,7 @@ public class PersonServicesImplementation : IPersonServices
     public PersonDTO Create(PersonDTO person)
     {
         var entity = _converter.Parse(person);
+        entity.Enabled = true;
         entity = _repository.Create(entity);
         return _converter.Parse(entity);
     }

@@ -25,6 +25,8 @@ builder.Services.AddScoped<IPersonServices, PersonServicesImplementation>();
 builder.Services.AddScoped<IPersonServicesV2, PersonServicesImplementationV2>();
 builder.Services.AddScoped<IBookServices, BookServicesImplementation>();
 
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
 var app = builder.Build();
