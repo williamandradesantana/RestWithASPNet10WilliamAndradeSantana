@@ -4,6 +4,7 @@ using static RestWithASPNet10WilliamAndradeSantana.Tests.IntegrationTests.Tools.
 using RestWithASPNet10WilliamAndradeSantana.Data.DTO.V1;
 using System.Net.Http.Json;
 using FluentAssertions;
+using System.Net;
 
 namespace RestWithASPNet10WilliamAndradeSantana.Tests.IntegrationTests.Person;
 
@@ -84,8 +85,30 @@ public class PersonControllerJsonTests : IClassFixture<SqlServerFixture>
         _person = updated;
     }
 
-    [Fact(DisplayName = "03 - Get one person")]
+    [Fact(DisplayName = "03 - Disable Person By id")]
     [TestPriority(3)]
+    public async Task DisablePersonById_ShouldReturnOk()
+    {
+        // arrange & act
+        var response = await _httpClient.PatchAsync($"/api/people/v1/{_person.Id}", null);
+
+        // assert
+        response.EnsureSuccessStatusCode();
+
+        var disabled = await response.Content.ReadFromJsonAsync<PersonDTO>();
+        
+        disabled.Should().NotBeNull();
+        disabled.Id.Should().BeGreaterThan(0);
+        disabled.FirstName.Should().Be(_person.FirstName);
+        disabled.LastName.Should().Be(_person.LastName);
+        disabled.Address.Should().Be(_person.Address);
+        disabled.Enabled.Should().BeFalse();
+        
+        _person = disabled;
+    }
+
+    [Fact(DisplayName = "04 - Get one person")]
+    [TestPriority(4)]
     public async Task FindPersonById_ShouldReturnOk()
     {
         var response = await _httpClient.GetAsync($"/api/people/v1/{_person.Id}");
@@ -98,5 +121,15 @@ public class PersonControllerJsonTests : IClassFixture<SqlServerFixture>
         found.FirstName.Should().Be(_person.FirstName);
         found.LastName.Should().Be(_person.LastName);
         found.Address.Should().Be(_person.Address);
+        found.Enabled.Should().BeFalse();
+    }
+
+    [Fact(DisplayName = "05 - Delete one person")]
+    [TestPriority(5)]
+    public async Task DeletePersonById_ShouldReturnOk()
+    {
+        var response = await _httpClient.DeleteAsync($"/api/people/v1/{_person.Id}");
+
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 }
