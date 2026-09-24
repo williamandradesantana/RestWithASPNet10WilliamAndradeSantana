@@ -132,4 +132,28 @@ public class PersonControllerJsonTests : IClassFixture<SqlServerFixture>
 
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
+
+    [Fact(DisplayName = "06 - Find all people")]
+    [TestPriority(6)]
+    public async Task FindAllPeople_ShouldReturnOk()
+    {
+        var response = await _httpClient.GetAsync($"/api/people/v1");
+        response.EnsureSuccessStatusCode();
+
+        var people = await response.Content.ReadFromJsonAsync<List<PersonDTO>>();
+        people.Should().NotBeNull();
+        people.Count.Should().BeGreaterThan(0);
+
+        PersonDTO first = people.First(person => person.FirstName == "John");
+        first.LastName.Should().Be("Doe");
+        first.Address.Should().Be("123 Main St");
+        first.Enabled.Should().BeTrue();
+        first.Gender.Should().Be("Male");
+
+        PersonDTO second = people.First(person => person.FirstName == "Leonardo");
+        second.LastName.Should().Be("Da Vinci");
+        second.Address.Should().Be("Anchiano - Italy");
+        second.Enabled.Should().BeTrue();
+        second.Gender.Should().Be("Male");
+    }
 }
