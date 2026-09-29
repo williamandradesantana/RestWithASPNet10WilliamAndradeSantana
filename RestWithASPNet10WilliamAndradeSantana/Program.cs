@@ -1,4 +1,5 @@
 using RestWithASPNet10WilliamAndradeSantana.Configurations;
+using RestWithASPNet10WilliamAndradeSantana.Hypermedia.Filters;
 using RestWithASPNet10WilliamAndradeSantana.Repositories;
 using RestWithASPNet10WilliamAndradeSantana.Repositories.Implementation;
 using RestWithASPNet10WilliamAndradeSantana.Services;
@@ -9,7 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.AddSerilogLogging();
 
-builder.Services.AddControllers().AddContentNegotiation();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<HyperMediaFilter>();
+}).AddContentNegotiation();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenAPIConfig();
@@ -17,6 +21,7 @@ builder.Services.AddSwaggerConfig();
 builder.Services.AddRouteConfig();
 
 builder.Services.AddCorsConfiguration(builder.Configuration);
+builder.Services.AddHATEOASConfiguration();
 
 builder.Services.AddDatabaseConfiguration(builder.Configuration);
 builder.Services.AddEvolveConfiguration(builder.Configuration, builder.Environment);
@@ -42,6 +47,7 @@ app.UseRouting();
 app.UseCorsConfiguration(builder.Configuration);
 
 app.MapControllers();
+app.UseHATEOASRoutes();
 
 app.UseSwaggerSpecification();
 app.UseScalarConfiguration();

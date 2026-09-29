@@ -26,7 +26,7 @@ public abstract class ContentResponseEnricher<T>
     public async Task Enrich(ResultExecutingContext response)
     {
         var urlHelper = new UrlHelperFactory().GetUrlHelper(response);
-        if (urlHelper is OkObjectResult okObjectResult)
+        if (response.Result is OkObjectResult okObjectResult)
         {
             if (okObjectResult.Value is T model)
             {
