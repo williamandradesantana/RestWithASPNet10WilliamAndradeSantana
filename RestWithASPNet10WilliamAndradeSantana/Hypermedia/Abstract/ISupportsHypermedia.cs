@@ -1,6 +1,6 @@
 ﻿namespace RestWithASPNet10WilliamAndradeSantana.Hypermedia.Abstract;
     
-public interface ISupportsEnricher
+public interface ISupportsHypermedia
 {
     List<HyperMediaLink> Links { get; set; }
 }

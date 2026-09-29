@@ -2,7 +2,7 @@
 
 namespace RestWithASPNet10WilliamAndradeSantana.Hypermedia.Abstract;
 
-public interface IReponseEnricher
+public interface IResponseEnricher
 {
     bool CanEnrich(ResultExecutingContext context);
     Task Enrich(ResultExecutingContext context);

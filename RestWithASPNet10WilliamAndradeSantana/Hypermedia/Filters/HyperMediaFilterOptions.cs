@@ -4,5 +4,5 @@ namespace RestWithASPNet10WilliamAndradeSantana.Hypermedia.Filters;
 
 public class HyperMediaFilterOptions
 {
-    public List<IReponseEnricher> ContentResponseEnricherList { get; set; } = [];
+    public List<IResponseEnricher> ContentResponseEnricherList { get; set; } = [];
 }
