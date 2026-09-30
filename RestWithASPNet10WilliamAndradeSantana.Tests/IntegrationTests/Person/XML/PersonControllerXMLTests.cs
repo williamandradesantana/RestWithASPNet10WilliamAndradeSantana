@@ -150,10 +150,10 @@ public class PersonControllerXMLTests : IClassFixture<SqlServerFixture>
         first.Enabled.Should().BeTrue();
         first.Gender.Should().Be("Male");
 
-        PersonDTO second = people.First(person => person.FirstName == "Leonardo");
-        second.LastName.Should().Be("Da Vinci");
-        second.Address.Should().Be("Anchiano - Italy");
+        PersonDTO second = people.First(person => person.FirstName == "Jane");
+        second.LastName.Should().Be("Doe");
+        second.Address.Should().Be("456 Oak Ave");
         second.Enabled.Should().BeTrue();
-        second.Gender.Should().Be("Male");
+        second.Gender.Should().Be("Female");
     }
 }
